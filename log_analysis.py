@@ -19,17 +19,17 @@ def count_requests_per_ip(log_file):
         print(f"An error occurred while reading the log file: {e}")
         return Counter()
 
-# Function to find the most accessed endpoint
+#This Function to find the most accessed endpoint
 def most_accessed_endpoint(log_file):
     endpoint_counts = Counter()
     try:
         with open(log_file, 'r') as file:
             for line in file:
-                parts = line.split('"')  # Split by double quotes to isolate the request part
+                parts = line.split('"')  
                 if len(parts) > 1:
                     request = parts[1].split(' ')
                     if len(request) > 1:
-                        endpoint = request[1]  # Extract the endpoint
+                        endpoint = request[1]  # Extracting the endpoint
                         endpoint_counts[endpoint] += 1
         if endpoint_counts:
             return endpoint_counts.most_common(1)[0]  # Return most accessed endpoint
@@ -39,7 +39,7 @@ def most_accessed_endpoint(log_file):
         print(f"Error reading log file: {e}")
         return None
 
-# Function to detect suspicious activity (failed login attempts)
+# Function to detect suspicious activity (failed login attempts)***
 def detect_suspicious_activity(log_file):
     failed_attempts = Counter()
     try:
@@ -66,7 +66,7 @@ def write_to_csv(ip_counts, most_accessed, suspicious_activity):
             for ip, count in ip_counts.items():
                 writer.writerow([ip, count])
 
-            writer.writerow([])  # Empty row
+            writer.writerow([]) 
 
             # Write most accessed endpoint
             writer.writerow(["Most Accessed Endpoint", "Access Count"])
@@ -75,7 +75,7 @@ def write_to_csv(ip_counts, most_accessed, suspicious_activity):
             else:
                 writer.writerow(["No endpoints found"])
 
-            writer.writerow([])  # Empty row
+            writer.writerow([]) 
 
             # Write suspicious activity
             writer.writerow(["Suspicious Activity (Failed Login Attempts)"])
@@ -89,14 +89,14 @@ def write_to_csv(ip_counts, most_accessed, suspicious_activity):
 
 # Main function
 def main():
-    log_file = "sample.log"  # Replace with your log file name
+    log_file = "sample.log" 
 
     # Analyze the log file
     ip_counts = count_requests_per_ip(log_file)
     most_accessed = most_accessed_endpoint(log_file)
     suspicious_activity = detect_suspicious_activity(log_file)
 
-    # Print results
+    # Printing the results
     print("Requests per IP:")
     for ip, count in ip_counts.items():
         print(f"{ip} - {count} requests")
